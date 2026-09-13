@@ -14,27 +14,27 @@ const Workouts = () => {
         {
           label: "Push Ups",
           url: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?q=80&w=800&auto=format&fit=crop",
-          link: '/main'
+          link: '/train/pushups'
         },
         {
           label: "Lunges",
           url: "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?q=80&w=800&auto=format&fit=crop",
-          link: '/main'
+          link: '/train/squats'
         },
         {
           label: "Sit Ups",
           url: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop",
-          link: '/main'
+          link: '/train/crunches'
         },
         {
             label: "Crunches",
             url: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop",
-            link: '/main'
+            link: '/train/crunches'
         },
         {
             label: "HIIT Session",
             url: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
-            link: '/main'
+            link: '/train/squats'
         }
       ];
   return (

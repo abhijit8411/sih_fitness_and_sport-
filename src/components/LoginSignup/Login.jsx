@@ -7,6 +7,7 @@ import password_icon from '../Assets/password.png'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { isOnboarded } from '../../services/userProfile';
 
 const Login = () => {
 
@@ -18,24 +19,21 @@ const Login = () => {
 
     const loginUser = async (credentials) => {
         try {
-          // Set a 1 second timeout so we don't keep judges waiting if the free Render server is asleep
-          const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, credentials, {
-            timeout: 1000
-          });
+          const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, credentials, { timeout: 1500 });
           return response.data;
         } catch (error) {
-          console.warn('API Login failed or timed out. Falling back to local offline mode.', error);
-          
-          // MOCK FALLBACK FOR HACKATHON DEMO
-          // If the server is asleep, we just simulate a successful login so the demo can continue
+          console.warn('API Login failed or timed out. Using local offline mode.', error);
+          // Extract a name from the email (e.g. john@gmail.com -> John)
+          const emailName = credentials.email.split('@')[0];
+          const displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1).replace(/[._]/g, ' ');
           return {
             success: true,
             user: {
-              _id: "local-demo-user",
-              name: "SIH Judge",
+              _id: `local-${btoa(credentials.email.toLowerCase()).replace(/=/g, '').slice(0, 12)}`,
+              name: displayName,
               email: credentials.email
             },
-            token: "mock-jwt-token-for-demo",
+            token: `local-token-${Date.now()}`,
             isOfflineMock: true
           };
         }
@@ -56,14 +54,16 @@ const Login = () => {
           .then((data) => {
             console.log(data);
             localStorage.setItem('auth', JSON.stringify(data))
-            
-            if (data.isOfflineMock) {
-                toast.success('Offline Mode: Logged in locally! Redirecting...', { theme: 'dark' });
-            } else {
-                toast.success('Login successful! Redirecting...', { theme: 'dark' });
-            }
-            
-            setTimeout(() => navigate("/main"), 1000);
+            toast.success(data.isOfflineMock ? 'Logged in offline! Redirecting...' : 'Login successful! Redirecting...', { theme: 'dark' });
+            const userId = data.user?._id || data.user?.id || 'local-user';
+            const userEmail = data.user?.email || '';
+            setTimeout(() => {
+              if (!isOnboarded(userId, userEmail)) {
+                navigate("/onboarding");
+              } else {
+                navigate("/main");
+              }
+            }, 1000);
           })
           .catch((error) => {
             // This catch should rarely hit now due to the mock fallback above, but just in case
@@ -138,20 +138,7 @@ const Login = () => {
             </div>
         </div>
 
-        {/* FAST DEMO LOGIN BUTTON */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', paddingBottom: '30px' }}>
-            <button 
-                onClick={() => {
-                    setEmail('judge@sih.gov.in');
-                    setPassword('demo123');
-                    setTimeout(handleSubmit, 100);
-                }}
-                className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl text-black font-bold shadow-lg hover:scale-105 transition-transform"
-            >
-                ⚡ Fast Demo Login
-            </button>
-        </div>
-        </div>
+      </div>
     </div>
   )
 }

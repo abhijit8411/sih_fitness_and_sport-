@@ -30,16 +30,18 @@ const Navbar = () => {
                 <div>
                     <img src={logo} alt='logo' className='logo'/>
                 </div>
-                <a href="/">
-                <span>FitVerse</span>
-
+                <a href="/" style={{textDecoration: 'none'}}>
+                <span>Fitness & Sport</span>
                 </a>
             </div>
             
             <div className='nav-options'>
                 <div className='nav-button' onClick={switchArena}>
-                   {arena ? "Training Arena" : "Combat Arena"}
+                   {arena ? "Training Arena" : "Dashboard"}
                 </div>
+                <a href="/nutrition" className='nav-button' style={{color: '#4ade80', borderColor: 'rgba(74,222,128,0.4)', textAlign: 'center'}}>
+                    Nutrition
+                </a>
                 <div className='nav-button nav-logout' onClick={handleLogout}>
                     Logout
                 </div>

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Send, Mic, MicOff, Settings, Volume2, VolumeX, Trash2 } from 'lucide-react';
 import ChatMessage from './ChatMessage';
-import { generateAIResponse } from '../../services/api/chatService';
+import { generateAIResponse, generateProactiveGreeting } from '../../services/api/chatService';
 
 const SUGGESTED_PROMPTS = [
     "💪 Give me a quick workout",
@@ -14,17 +14,15 @@ const ChatWindow = ({ onClose }) => {
     const [messages, setMessages] = useState(() => {
         const saved = localStorage.getItem('fitverse_chat_history');
         if (saved) {
-            try {
-                return JSON.parse(saved);
-            } catch (e) {
-                console.error("Failed to parse chat history");
-            }
+            try { return JSON.parse(saved); } catch (e) { console.error("Failed to parse chat history"); }
         }
-        return [{
-            id: 'welcome',
-            role: 'ai',
-            text: 'Hello! I am your FitVerse AI Coach. How can I help you today?',
-        }];
+        // Build proactive greeting based on user data
+        const authData = localStorage.getItem('auth');
+        const auth = authData ? JSON.parse(authData) : null;
+        const userId = auth?.user?._id || auth?.user?.id || 'local-user';
+        const userName = auth?.user?.name || 'Athlete';
+        const greeting = generateProactiveGreeting(userId, userName);
+        return [{ id: 'welcome', role: 'ai', text: greeting }];
     });
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -145,12 +143,13 @@ const ChatWindow = ({ onClose }) => {
     };
 
     const clearChat = () => {
-        if (window.confirm("Are you sure you want to clear your chat history?")) {
-            const defaultMsg = [{
-                id: 'welcome',
-                role: 'ai',
-                text: 'Hello! I am your FitVerse AI Coach. How can I help you today?',
-            }];
+        if (window.confirm("Clear chat history?")) {
+            const authData = localStorage.getItem('auth');
+            const auth = authData ? JSON.parse(authData) : null;
+            const userId = auth?.user?._id || auth?.user?.id || 'local-user';
+            const userName = auth?.user?.name || 'Athlete';
+            const greeting = generateProactiveGreeting(userId, userName);
+            const defaultMsg = [{ id: 'welcome', role: 'ai', text: greeting }];
             setMessages(defaultMsg);
             localStorage.setItem('fitverse_chat_history', JSON.stringify(defaultMsg));
         }
@@ -164,7 +163,7 @@ const ChatWindow = ({ onClose }) => {
                 <div className="flex items-center gap-2">
                     <span className="text-2xl">🤖</span>
                     <div>
-                        <h3 className="text-white font-bold text-sm">FitVerse AI Coach</h3>
+                        <h3 className="text-white font-bold text-sm">Fitness & Sport AI Coach</h3>
                         <p className="text-green-500 text-xs flex items-center gap-1">
                             <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse"></span>
                             Online

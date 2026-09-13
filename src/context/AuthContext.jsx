@@ -1,5 +1,6 @@
 import {useState,useEffect,useContext,createContext} from 'react';
 import axios from 'axios';
+import { runAnalysis } from '../services/analyzer';
 
 const Authcontext = createContext();
 
@@ -28,6 +29,14 @@ const AuthProvider=({children})=>{
         }
         //eslint-disable-next-line
     },[]);
+
+    // When auth.user becomes available, run passive analysis (no UI blocking)
+    useEffect(() => {
+        if (auth?.user && auth.user._id) {
+            try { runAnalysis(auth.user._id, { askAI: true }); }
+            catch(e) { console.warn('Auto analysis failed', e); }
+        }
+    }, [auth?.user]);
     return (
         <Authcontext.Provider value={[auth,setAuth]}>
             {children}

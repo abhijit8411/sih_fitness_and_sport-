@@ -28,6 +28,9 @@ import MovementCoach from "./components/coach/MovementCoach";
 import QuickFit from "./components/quickfit/QuickFit";
 import DemoMode from "./components/demo/DemoMode";
 import AIChatWidget from "./components/chat/AIChatWidget";
+import NutritionHub from "./components/nutrition/NutritionHub";
+import OnboardingFlow from "./components/onboarding/OnboardingFlow";
+import ProgressTracker from "./components/progress/ProgressTracker";
 
 function App() {
   const [auth, setAuth] = useAuth();
@@ -48,20 +51,20 @@ function App() {
 
     switch (pathname) {
       case "/":
-        title = "FitVerse — AI-Powered Fitness";
-        metaDescription = "FitVerse is an AI-powered fitness app with personalized training.";
+        title = "Fitness & Sport — AI-Powered Fitness";
+        metaDescription = "Fitness & Sport is an AI-powered fitness app with personalized training.";
         break;
       case "/login":
-        title = "Login — FitVerse";
+        title = "Login — Fitness & Sport";
         break;
       case "/signup":
-        title = "Sign Up — FitVerse";
+        title = "Sign Up — Fitness & Sport";
         break;
       case "/main":
-        title = "Dashboard — FitVerse";
+        title = "Dashboard — Fitness & Sport";
         break;
       default:
-        title = "FitVerse";
+        title = "Fitness & Sport";
         break;
     }
 
@@ -101,7 +104,10 @@ function App() {
             <Route path="/fitness-dna/results" element={<FitnessDNAResults />} />
             <Route path="/movement-coach" element={<MovementCoach />} />
             <Route path="/quick-fit" element={<QuickFit />} />
-            <Route path="/demo" element={<DemoMode />} />
+            <Route path="/demo" element={<NutritionHub />} />
+            <Route path="/nutrition" element={<NutritionHub />} />
+            <Route path="/onboarding" element={<OnboardingFlow />} />
+            <Route path="/progress" element={<ProgressTracker />} />
 
     </Routes>
     </>

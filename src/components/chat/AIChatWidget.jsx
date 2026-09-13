@@ -20,7 +20,7 @@ const AIChatWidget = () => {
                     className="flex items-center gap-2 bg-[#f15377] hover:bg-[#d63a5e] text-white px-5 py-3 rounded-full shadow-2xl hover:-translate-y-1 transition-all group border border-pink-500/30"
                 >
                     <span className="text-xl group-hover:scale-110 transition-transform">🤖</span>
-                    <span className="font-bold">FitVerse AI Coach</span>
+                    <span className="font-bold">Fitness & Sport AI Coach</span>
                 </button>
             )}
         </div>

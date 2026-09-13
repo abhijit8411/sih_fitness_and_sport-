@@ -15,11 +15,14 @@ function Combat() {
       <div className="min-h-screen bg-black pt-24 pb-12">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-[#f15377]/10 border border-[#f15377]/30 text-[#f15377] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+              ⚡ TRAINING ARENA
+            </div>
             <h1 className="text-5xl font-bold bg-gradient-to-r from-[#f15377] to-yellow-500 bg-clip-text text-transparent mb-4">
               AI Training Arena
             </h1>
             <p className="text-xl text-gray-400">
-              Welcome to the intelligent combat and movement analysis facility.
+              Choose your mode. Analyze your body. Crush your goals.
             </p>
           </div>
 
@@ -43,10 +46,10 @@ function Combat() {
               <p className="text-gray-400 text-sm">Short on time? Generate a rapid session based on your weaknesses.</p>
             </a>
 
-            <a href="/demo" className="bg-gradient-to-br from-gray-900 to-black border border-yellow-500/50 rounded-2xl p-6 hover:-translate-y-1 transition-transform group shadow-[0_0_15px_rgba(234,179,8,0.1)]">
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🏆</div>
-              <h3 className="text-xl font-bold text-yellow-500 mb-2">SIH Demo</h3>
-              <p className="text-gray-400 text-sm">Load sample data for instant hackathon demonstrations.</p>
+            <a href="/nutrition" className="bg-gradient-to-br from-gray-900 to-black border border-green-500/50 rounded-2xl p-6 hover:-translate-y-1 transition-transform group shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🥗</div>
+              <h3 className="text-xl font-bold text-green-400 mb-2">Nutrition Hub</h3>
+              <p className="text-gray-400 text-sm">Track meals, macros & hydration. Fuel your performance with expert-curated nutrition plans.</p>
             </a>
 
           </div>
